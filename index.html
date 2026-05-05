@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Howard's Lesson Calendar Dashboard | North Wales Tutoring Group</title>
+  <meta name="description" content="Howard's tutor lesson calendar dashboard for North Wales Tutoring Group with student filters, lesson details, Teams links and upcoming tutoring schedules." />
+
+    <link rel="icon" type="image/png" href="nwt-group-logo.png">
+  <link rel="apple-touch-icon" href="nwt-group-logo.png">
+  <link rel="shortcut icon" href="nwt-group-logo.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --pink: #fd46c1;
+      --violet: #9674fd;
+      --navy: #070769;
+      --gold: #ffc72d;
+      --white: #ffffff;
+      --black: #141414;
+      --text: #1d1d1f;
+      --muted: #666b78;
+      --line: #e8e8ee;
+      --soft-bg: #f7f7f4;
+      --soft-bg-2: #fcfcfa;
+      --card: #ffffff;
+      --radius: 24px;
+      --radius-sm: 18px;
+      --shadow: 0 14px 40px rgba(15, 18, 40, 0.06);
+      --shadow-strong: 0 20px 55px rgba(15, 18, 40, 0.10);
+      --container: 1380px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(253, 70, 193, 0.12), transparent 28rem),
+        radial-gradient(circle at top right, rgba(151, 116, 253, 0.16), transparent 30rem),
+        var(--soft-bg);
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+      line-height: 1.7;
+    }
+
+    body,
+    p,
+    li,
+    a,
+    input,
+    textarea,
+    select,
+    button,
+    .btn,
+    .nav-link {
+      font-family: "Manrope", sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6,
+    .hero-title,
+    .hero-kicker,
+    .section-kicker,
+    .brand-text {
+      font-family: "Fraunces", serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    #site-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 2000;
+      padding-top: 0.75rem;
+    }
+
+    .site-header {
+      padding: 0 0 0.75rem;
+      background: transparent;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 1.4rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 30px rgba(15, 18, 40, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 12px 26px rgba(253, 70, 193, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      background: #ffffff;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 0.05rem;
+      line-height: 1.15;
+    }
+
+    .brand-text {
+      font-size: 1.15rem;
+      color: var(--pink);
+      font-weight: 800;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .site-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #252835;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(7, 7, 105, 0.06);
+      color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white);
+      padding: 0.8rem 1.25rem;
+    }
+
+    .nav-cta:hover {
+      background: #e8b200;
+      color: var(--white);
+    }
+
+    .nav-toggle {
+      display: none;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      margin: 5px 0;
+      border-radius: 999px;
+      background: var(--black);
+    }
+
+    .top-hero-shell {
+      overflow: hidden;
+    }
+
+    .hero-home {
+      padding: 2.3rem 0 3rem;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(7, 7, 105, 0.98) 0%, rgba(10, 10, 144, 0.95) 48%, rgba(151, 116, 253, 0.9) 100%);
+      color: var(--white);
+      box-shadow: var(--shadow-strong);
+      padding: clamp(1.4rem, 4vw, 3rem);
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+    }
+
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -80px;
+    }
+
+    .hero-card::after {
+      width: 180px;
+      height: 180px;
+      bottom: -90px;
+      left: 18%;
+      background: rgba(253, 70, 193, 0.22);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+      gap: clamp(1.4rem, 4vw, 2.4rem);
+      align-items: stretch;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker,
+    .section-kicker {
+      margin: 0 0 0.85rem;
+      font-size: 0.98rem;
+      color: var(--navy);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .hero-kicker {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(2.45rem, 5.8vw, 5.5rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      max-width: 850px;
+    }
+
+    .hero-title-accent {
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      margin: 1.25rem 0 0;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 820px;
+      font-size: 1.04rem;
+      line-height: 1.75;
+    }
+
+    .hero-mini-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.55rem;
+    }
+
+    .hero-trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 900;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-trust-pill-pink {
+      background: rgba(253, 70, 193, 0.22);
+    }
+
+    .hero-trust-pill-violet {
+      background: rgba(151, 116, 253, 0.26);
+    }
+
+    .hero-trust-pill-gold {
+      background: rgba(255, 199, 45, 0.2);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      box-shadow: 0 18px 50px rgba(15, 18, 40, 0.14);
+      border-radius: 30px;
+      padding: 1.4rem;
+      color: var(--text);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .tutor-welcome {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tutor-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--pink), var(--violet));
+      border: 3px solid #ffffff;
+      box-shadow: 0 12px 24px rgba(15, 18, 40, 0.12);
+      flex: 0 0 auto;
+    }
+
+    .tutor-welcome strong {
+      display: block;
+      font-family: "Fraunces", serif;
+      font-size: 1.45rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--navy);
+    }
+
+    .tutor-welcome span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 800;
+      margin-top: 0.15rem;
+    }
+
+    .next-card .section-kicker {
+      margin-bottom: 0.65rem;
+    }
+
+    .next-card h2 {
+      margin: 0 0 0.7rem;
+      font-size: 2rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .next-card p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .mini-stat {
+      padding: 1rem;
+      border-radius: 20px;
+      background: var(--soft-bg-2);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.55rem;
+      line-height: 1;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .mini-stat span {
+      display: block;
+      color: var(--muted);
+      margin-top: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .section {
+      padding: 1.5rem 0 4.5rem;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 285px minmax(0, 1fr) 380px;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar,
+    .details-panel,
+    .calendar-wrap,
+    .list-section {
+      padding: 1.25rem;
+    }
+
+    .sidebar,
+    .details-panel {
+      position: sticky;
+      top: 6.8rem;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.3vw, 2rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .panel-heading p {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .student-buttons {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .student-button {
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      background: #fff;
+      border-radius: 18px;
+      padding: 0.9rem 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 900;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      text-align: left;
+      box-shadow: 0 8px 18px rgba(15, 18, 40, 0.03);
+    }
+
+    .student-button:hover,
+    .student-button.active {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--student-colour, var(--navy)) 55%, white);
+      background: color-mix(in srgb, var(--student-colour, var(--navy)) 8%, white);
+      box-shadow: 0 14px 28px rgba(15, 18, 40, 0.07);
+    }
+
+    .student-name-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      min-width: 0;
+    }
+
+    .student-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--student-colour, var(--navy));
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--student-colour, var(--navy)) 12%, transparent);
+      flex: 0 0 auto;
+    }
+
+    .student-count {
+      min-width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      background: var(--student-colour, var(--navy));
+      font-size: 0.76rem;
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+
+    .tools {
+      margin-top: 1rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .search-box,
+    .view-select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      background: white;
+      color: var(--text);
+      outline: none;
+      font-weight: 700;
+    }
+
+    .search-box:focus,
+    .view-select:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 4px rgba(151, 116, 253, 0.16);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .month-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .btn,
+    .month-tab,
+    .plain-btn,
+    .link-btn,
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.85rem 1.15rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.92rem;
+      font-weight: 900;
+      transition: all 0.22s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary,
+    .month-tab.active,
+    .plain-btn.active,
+    .link-btn {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .btn-primary:hover,
+    .link-btn:hover {
+      background: #252525;
+      transform: translateY(-1px);
+    }
+
+    .month-tab,
+    .plain-btn,
+    .copy-btn {
+      background: transparent;
+      color: var(--black);
+      border-color: #d9d9e2;
+    }
+
+    .month-tab:hover,
+    .plain-btn:hover,
+    .copy-btn:hover {
+      background: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .day-name {
+      text-align: center;
+      font-weight: 900;
+      color: var(--navy);
+      font-size: 0.78rem;
+      padding: 0.45rem 0;
+    }
+
+    .day-cell {
+      min-height: 148px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      padding: 0.75rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      box-shadow: 0 8px 18px rgba(15, 18, 40, 0.025);
+    }
+
+    .day-cell.muted {
+      background: #f0f0ed;
+      color: #9aa0aa;
+      box-shadow: none;
+    }
+
+    .day-cell.today {
+      border-color: rgba(253, 70, 193, 0.42);
+      box-shadow: inset 0 0 0 2px rgba(253, 70, 193, 0.14), 0 12px 24px rgba(253, 70, 193, 0.06);
+    }
+
+    .day-number {
+      font-weight: 900;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .today-tag,
+    .type-chip,
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      font-weight: 900;
+    }
+
+    .today-tag {
+      background: rgba(253, 70, 193, 0.12);
+      color: #b71882;
+      border: 1px solid rgba(253, 70, 193, 0.2);
+      padding: 0.2rem 0.45rem;
+      font-size: 0.64rem;
+    }
+
+    .event-pill {
+      display: grid;
+      gap: 0.05rem;
+      border: 0;
+      border-left: 5px solid var(--event-colour);
+      background: color-mix(in srgb, var(--event-colour) 9%, white);
+      border-radius: 15px;
+      padding: 0.65rem 0.7rem;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text);
+      min-width: 0;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, outline 0.18s ease;
+    }
+
+    .event-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15, 18, 40, 0.06);
+      outline: 2px solid color-mix(in srgb, var(--event-colour) 25%, transparent);
+    }
+
+    .event-time {
+      font-size: 0.7rem;
+      font-weight: 900;
+      color: var(--event-colour);
+      white-space: nowrap;
+    }
+
+    .event-student {
+      font-size: 0.83rem;
+      font-weight: 900;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .event-title {
+      font-size: 0.68rem;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 750;
+    }
+
+    .day-cell.selected-day {
+      border-color: rgba(7, 7, 105, 0.32);
+      box-shadow: inset 0 0 0 2px rgba(7, 7, 105, 0.10), 0 14px 28px rgba(15, 18, 40, 0.06);
+    }
+
+    .mobile-event-count {
+      display: none;
+    }
+
+    .day-schedule-panel {
+      margin-top: 1rem;
+      padding: 1.1rem;
+      border-radius: 24px;
+      background: var(--soft-bg-2);
+      border: 1px solid var(--line);
+    }
+
+    .day-schedule-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .day-schedule-head h3 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .day-schedule-head p {
+      margin: 0.35rem 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 750;
+    }
+
+    .day-schedule-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .day-schedule-item {
+      display: grid;
+      grid-template-columns: 100px minmax(0, 1fr);
+      gap: 0.9rem;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-left: 7px solid var(--row-colour);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(15, 18, 40, 0.03);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .day-schedule-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(15, 18, 40, 0.07);
+    }
+
+    .day-schedule-time {
+      color: var(--row-colour);
+      font-weight: 900;
+      line-height: 1.3;
+      font-size: 0.88rem;
+    }
+
+    .day-schedule-main strong {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .day-schedule-main span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .details-empty {
+      color: var(--muted);
+      line-height: 1.65;
+      background: var(--soft-bg-2);
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      padding: 1.1rem;
+    }
+
+    .details-card {
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 24px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .details-head {
+      padding: 1.2rem;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--detail-colour) 14%, white), #ffffff);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .details-head .badge {
+      gap: 0.4rem;
+      padding: 0.45rem 0.72rem;
+      background: var(--detail-colour);
+      color: white;
+      font-size: 0.74rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .details-head h3 {
+      margin: 0 0 0.35rem;
+      font-size: 2rem;
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+
+    .details-head p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .details-body {
+      padding: 1.2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .info-row {
+      display: grid;
+      gap: 0.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info-row:last-of-type {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .info-row span {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      font-weight: 900;
+    }
+
+    .info-row strong,
+    .info-row div {
+      font-size: 0.94rem;
+      line-height: 1.55;
+      font-weight: 750;
+    }
+
+    .link-btn,
+    .copy-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .list-section {
+      margin-top: 1.25rem;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .lesson-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-left: 7px solid var(--row-colour);
+      border-radius: 20px;
+      padding: 1rem;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(15, 18, 40, 0.025);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .lesson-row:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(15, 18, 40, 0.07);
+    }
+
+    .lesson-date {
+      font-weight: 900;
+      color: var(--row-colour);
+      line-height: 1.35;
+    }
+
+    .lesson-main strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+    }
+
+    .lesson-main span {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-weight: 650;
+    }
+
+    .type-chip {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.72rem;
+      background: var(--soft-bg-2);
+      color: var(--muted);
+      white-space: nowrap;
+      border: 1px solid var(--line);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 1220px) {
+      .dashboard {
+        grid-template-columns: 260px minmax(0, 1fr);
+      }
+
+      .details-panel {
+        grid-column: 1 / -1;
+        position: static;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      .site-nav {
+        position: absolute;
+        top: calc(100% + 0.75rem);
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.98);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .site-nav.open {
+        display: flex;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar,
+      .details-panel {
+        position: static;
+      }
+
+      .student-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 740px) {
+      .container {
+        width: min(100% - 1rem, var(--container));
+      }
+
+      .header-inner {
+        border-radius: 24px;
+        padding: 0.8rem 1rem;
+      }
+
+      .brand-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .brand-subtitle {
+        display: none;
+      }
+
+      .hero-home {
+        padding-top: 1rem;
+      }
+
+      .hero-card {
+        border-radius: 26px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .student-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-grid {
+        gap: 0.35rem;
+      }
+
+      .day-name {
+        font-size: 0.66rem;
+      }
+
+      .day-cell {
+        min-height: 124px;
+        padding: 0.45rem;
+        border-radius: 15px;
+      }
+
+      .mobile-event-count {
+        display: inline-flex;
+        min-width: 22px;
+        height: 22px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(7, 7, 105, 0.08);
+        color: var(--navy);
+        font-size: 0.68rem;
+        font-weight: 900;
+      }
+
+      .event-pill {
+        min-height: 10px;
+        height: 10px;
+        padding: 0;
+        border-left: 0;
+        border-radius: 999px;
+        background: var(--event-colour);
+        box-shadow: none;
+      }
+
+      .event-pill:hover {
+        transform: none;
+        box-shadow: none;
+        outline: 2px solid color-mix(in srgb, var(--event-colour) 30%, transparent);
+      }
+
+      .event-time,
+      .event-student,
+      .event-title {
+        display: none;
+      }
+
+      .day-schedule-panel {
+        border-radius: 22px;
+        padding: 1rem;
+        background: #ffffff;
+        box-shadow: var(--shadow);
+      }
+
+      .day-schedule-head {
+        display: block;
+      }
+
+      .day-schedule-item {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .lesson-row {
+        grid-template-columns: 1fr;
+      }
+
+      .top-controls {
+        align-items: stretch;
+      }
+
+      .month-tabs,
+      .top-controls .plain-btn {
+        width: 100%;
+      }
+
+      .month-tab,
+      .plain-btn {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="site-navbar">
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a class="brand" href="#top" aria-label="North Wales Tutoring Group lesson dashboard">
+            <img class="brand-logo" src="nwt-group-logo.png" alt="North Wales Tutoring Group logo">
+            <span class="brand-copy">
+              <span class="brand-text">North Wales Tutoring Group</span>
+              <span class="brand-subtitle">Howard's lesson calendar</span>
+            </span>
+          </a>
+
+          <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav class="site-nav" id="siteNav" aria-label="Dashboard navigation">
+            <a href="#calendar" class="nav-link">Calendar</a>
+            <a href="#students" class="nav-link">Students</a>
+            <a href="#lesson-list" class="nav-link">Lesson List</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="top-hero-shell" id="top">
+    <main>
+      <section class="hero-home">
+        <div class="container">
+          <div class="hero-card">
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <p class="hero-kicker"><i class="bi bi-calendar2-week"></i> North Wales Tutoring Group</p>
+                <h1 class="hero-title">Howard's <span class="hero-title-accent">lesson calendar</span> dashboard</h1>
+                <p class="hero-subtitle">A clear tutoring dashboard for Howard to filter by student, click any lesson to view Teams details, and check the full upcoming schedule for May and June 2026.</p>
+
+                <div class="hero-mini-trust">
+                  <div class="hero-trust-pill hero-trust-pill-pink"><i class="bi bi-person-check"></i> Student filters</div>
+                  <div class="hero-trust-pill hero-trust-pill-violet"><i class="bi bi-camera-video"></i> Teams lesson links</div>
+                  <div class="hero-trust-pill hero-trust-pill-gold"><i class="bi bi-journal-check"></i> Exam period extras</div>
+                </div>
+              </div>
+
+              <aside class="glass-card next-card" id="nextLessonCard">
+                <div class="tutor-welcome">
+                  <img class="tutor-avatar" src="howard-profile.jpg" alt="Howard profile photo">
+                  <div>
+                    <strong>Hi Howard</strong>
+                    <span>Your tutoring schedule at a glance</span>
+                  </div>
+                </div>
+                <p class="section-kicker"><i class="bi bi-stars"></i> Next lesson</p>
+                <h2>Loading...</h2>
+                <p>Please select a lesson from the calendar to view more details.</p>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="calendar">
+        <div class="container">
+          <section class="dashboard">
+            <aside class="panel sidebar" id="students">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-kicker"><i class="bi bi-people-fill"></i> Students</p>
+                  <h2>Choose a student</h2>
+                  <p>Click a name to show only that student’s lessons.</p>
+                </div>
+              </div>
+
+              <div class="student-buttons" id="studentButtons"></div>
+
+              <div class="tools">
+                <input class="search-box" id="searchInput" type="search" placeholder="Search topics, level, notes..." />
+                <select class="view-select" id="typeFilter">
+                  <option value="all">All lesson types</option>
+                  <option value="Regular">Regular only</option>
+                  <option value="Extra">Extra only</option>
+                  <option value="Exam period">Exam period only</option>
+                  <option value="One-off">One-off only</option>
+                </select>
+              </div>
+            </aside>
+
+            <section class="panel calendar-wrap">
+              <div class="top-controls">
+                <div class="panel-heading" style="margin-bottom: 0;">
+                  <div>
+                    <p class="section-kicker"><i class="bi bi-calendar3"></i> Howard's calendar</p>
+                    <h2 id="calendarTitle">May 2026</h2>
+                    <p>Lesson times are shown in UK time.</p>
+                  </div>
+                </div>
+                <div class="month-tabs">
+                  <button class="month-tab active" data-month="4" data-year="2026">May 2026</button>
+                  <button class="month-tab" data-month="5" data-year="2026">June 2026</button>
+                </div>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+              <div class="day-schedule-panel" id="daySchedulePanel">
+                <div class="details-empty">Tap a day to see the full day schedule.</div>
+              </div>
+            </section>
+
+            <aside class="panel details-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-kicker"><i class="bi bi-info-circle-fill"></i> Lesson details</p>
+                  <h2>Lesson card</h2>
+                  <p>View the meeting link, passcode, notes and requested topics.</p>
+                </div>
+              </div>
+              <div id="detailsContent" class="details-empty">Click a lesson card in the calendar or list to view the student, subject, Teams link, meeting ID, passcode, notes and requested topics.</div>
+            </aside>
+          </section>
+
+          <section class="panel list-section" id="lesson-list">
+            <div class="top-controls">
+              <div class="panel-heading" style="margin-bottom: 0;">
+                <div>
+                  <p class="section-kicker"><i class="bi bi-list-check"></i> Upcoming lessons</p>
+                  <h2>Lesson list</h2>
+                  <p>Use this as a quick admin view of all visible lessons.</p>
+                </div>
+              </div>
+              <button class="plain-btn" id="resetBtn">Show all</button>
+            </div>
+            <div class="hero-stats" style="margin-bottom: 1rem;">
+              <div class="mini-stat">
+                <strong id="statStudents">0</strong>
+                <span>Students</span>
+              </div>
+              <div class="mini-stat">
+                <strong id="statLessons">0</strong>
+                <span>Lessons shown</span>
+              </div>
+              <div class="mini-stat">
+                <strong>UK</strong>
+                <span>Lesson times</span>
+              </div>
+            </div>
+            <div class="lesson-list" id="lessonList"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const studentColours = {
+      "Sara": "#fd46c1",
+      "Tristan": "#9674fd",
+      "Paddy": "#070769",
+      "Cayden": "#0a7db8",
+      "Mia": "#d946ef",
+      "Joao": "#15946b",
+      "Charlie": "#ffc72d",
+      "Ethan": "#141414"
+    };
+
+    const lessonDetails = {
+      Sara: {
+        level: "GCSE Higher Tier",
+        link: "https://teams.live.com/meet/93491013470507?p=gll98lWiNvDFKGTsIi",
+        meetingId: "93491013470507",
+        passcode: "AM75Vk",
+        topics: "GCSE Higher Tier support and exam practice.",
+        notes: "Regular Monday lesson with extra May lessons added."
+      },
+      Tristan: {
+        level: "AS Level OCR MEI Further Maths, modelling with algorithms and mechanics",
+        link: "https://teams.live.com/meet/9372651462959?p=42wkzB9r11cFC6YLph",
+        meetingId: "937 265 146 295 9",
+        passcode: "L9Pk78",
+        topics: "Sequences and series, vectors and 3D space, reformulating network problems, and general exam question practice.",
+        notes: "Temporary exam-period schedule only."
+      },
+      Paddy: {
+        level: "Year 11 Edexcel Maths GCSE",
+        link: "https://teams.live.com/meet/9342325227522?p=NH0Kb46rwSv2rzLkAz",
+        meetingId: "934 232 522 752 2",
+        passcode: "gC3qH3",
+        topics: "A bit of everything, focused on exam preparation.",
+        notes: "Only the listed exam-period lessons are included."
+      },
+      Cayden: {
+        level: "GCSE Year 11 WJEC",
+        link: "https://teams.live.com/meet/9344074994832?p=Fz5yOwnNTFMYbUgTPx",
+        meetingId: "934 407 499 483 2",
+        passcode: "nU35wY",
+        topics: "GCSE maths support and WJEC exam preparation.",
+        notes: "Regular Wednesday lesson."
+      },
+      Mia: {
+        level: "AS-level Further Maths Edexcel",
+        link: "",
+        meetingId: "To be added",
+        passcode: "To be added",
+        topics: "Differentiation support before exams.",
+        notes: "High achiever. Covered 2 years of A-level Maths and first year of Further Maths. Panicking before exams."
+      },
+      Joao: {
+        level: "Year 13 Further Maths OCR B MEI",
+        link: "",
+        meetingId: "To be added",
+        passcode: "To be added",
+        topics: "Mechanics module, problem solving, exam technique, past papers, impulse and momentum, centre of mass 1, and moments of forces with sliding and toppling.",
+        notes: "Regular Thursday lesson."
+      },
+      Charlie: {
+        level: "GCSE Year 11 Foundation Edexcel",
+        link: "https://teams.live.com/meet/9349219203508?p=sivtQ0poXqnXE5V9AE",
+        meetingId: "934 921 920 350 8",
+        passcode: "QS2yM3",
+        topics: "GCSE Foundation Edexcel practice and revision.",
+        notes: "Regular Friday, Saturday and Sunday lessons, with extra May lessons added."
+      },
+      Ethan: {
+        level: "Year 13 A-level Maths WJEC",
+        link: "https://teams.live.com/meet/9394861654796?p=W5ieLebchsoXSkzGtp",
+        meetingId: "939 486 165 479 6",
+        passcode: "sF3oa3",
+        topics: "Integration and integration under a curve.",
+        notes: "Regular Friday lesson."
+      }
+    };
+
+    const events = [];
+
+    function addEvent(student, date, time, type, override = {}) {
+      const details = lessonDetails[student];
+      events.push({
+        id: `${student}-${date}-${time}`.replace(/[^a-zA-Z0-9]/g, ""),
+        student,
+        date,
+        time,
+        type,
+        title: override.title || details.level,
+        level: override.level || details.level,
+        link: override.link ?? details.link,
+        meetingId: override.meetingId ?? details.meetingId,
+        passcode: override.passcode ?? details.passcode,
+        topics: override.topics || details.topics,
+        notes: override.notes || details.notes,
+        colour: studentColours[student]
+      });
+    }
+
+    function addRecurring(student, weekday, time, type, startDate, endDate) {
+      const start = parseLocalDate(startDate);
+      const end = parseLocalDate(endDate);
+      const date = new Date(start);
+      while (date <= end) {
+        if (date.getDay() === weekday) {
+          addEvent(student, toISO(date), time, type);
+        }
+        date.setDate(date.getDate() + 1);
+      }
+    }
+
+    function parseLocalDate(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function toISO(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    addRecurring("Sara", 1, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Cayden", 3, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Joao", 4, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Charlie", 5, "7:15-8:15pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Charlie", 6, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Charlie", 0, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-30");
+    addRecurring("Ethan", 5, "6:00-7:00pm", "Regular", "2026-05-05", "2026-06-11");
+
+    addEvent("Mia", "2026-05-06", "8:30-9:30pm", "One-off");
+
+    addEvent("Paddy", "2026-05-12", "6:00-7:00pm", "Exam period");
+    addEvent("Paddy", "2026-05-18", "8:30-9:30pm", "Exam period");
+    addEvent("Paddy", "2026-05-25", "8:30-9:30pm", "Exam period");
+    addEvent("Paddy", "2026-06-02", "6:00-7:00pm", "Exam period");
+    addEvent("Paddy", "2026-06-09", "6:00-7:00pm", "Exam period");
+
+    addEvent("Tristan", "2026-05-06", "7:10-8:10pm", "Exam period");
+    addEvent("Tristan", "2026-05-08", "8:30-9:30pm", "Exam period");
+    addEvent("Tristan", "2026-05-12", "8:00-9:00pm", "Exam period");
+    addEvent("Tristan", "2026-05-14", "7:30-8:30pm", "Exam period");
+
+    addEvent("Charlie", "2026-05-13", "7:15-8:15pm", "Extra");
+    addEvent("Charlie", "2026-05-26", "11:30am-12:30pm", "Extra");
+    addEvent("Charlie", "2026-05-28", "11:30am-12:30pm", "Extra");
+
+    addEvent("Sara", "2026-05-26", "9:00-10:00am", "Extra");
+    addEvent("Sara", "2026-05-27", "7:15-8:15pm", "Extra");
+    addEvent("Sara", "2026-05-28", "9:00-10:00am", "Extra");
+
+    const sortedEvents = events.sort((a, b) => parseLocalDate(a.date) - parseLocalDate(b.date) || timeToMinutes(a.time) - timeToMinutes(b.time));
+
+    let selectedStudent = "All";
+    let selectedMonth = 4;
+    let selectedYear = 2026;
+    let selectedType = "all";
+    let searchTerm = "";
+    let selectedDate = "2026-05-05";
+
+    const calendarGrid = document.getElementById("calendarGrid");
+    const calendarTitle = document.getElementById("calendarTitle");
+    const studentButtons = document.getElementById("studentButtons");
+    const detailsContent = document.getElementById("detailsContent");
+    const lessonList = document.getElementById("lessonList");
+    const searchInput = document.getElementById("searchInput");
+    const typeFilter = document.getElementById("typeFilter");
+    const resetBtn = document.getElementById("resetBtn");
+    const nextLessonCard = document.getElementById("nextLessonCard");
+    const daySchedulePanel = document.getElementById("daySchedulePanel");
+    const navToggle = document.getElementById("navToggle");
+    const siteNav = document.getElementById("siteNav");
+
+    function timeToMinutes(time) {
+      const first = time.split("-")[0].trim().toLowerCase();
+      const match = first.match(/(\d{1,2})(?::(\d{2}))?(am|pm)/);
+      if (!match) return 0;
+      let hours = Number(match[1]);
+      const minutes = Number(match[2] || 0);
+      const meridian = match[3];
+      if (meridian === "pm" && hours !== 12) hours += 12;
+      if (meridian === "am" && hours === 12) hours = 0;
+      return hours * 60 + minutes;
+    }
+
+    function formatDate(iso, options = {}) {
+      return parseLocalDate(iso).toLocaleDateString("en-GB", {
+        weekday: options.short ? "short" : "long",
+        day: "numeric",
+        month: options.short ? "short" : "long",
+        year: options.year ? "numeric" : undefined
+      });
+    }
+
+    function monthName(monthIndex) {
+      return new Date(2026, monthIndex, 1).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    }
+
+    function getFilteredEvents() {
+      return sortedEvents.filter(event => {
+        const matchesStudent = selectedStudent === "All" || event.student === selectedStudent;
+        const matchesType = selectedType === "all" || event.type === selectedType;
+        const haystack = `${event.student} ${event.title} ${event.level} ${event.topics} ${event.notes} ${event.type}`.toLowerCase();
+        const matchesSearch = !searchTerm || haystack.includes(searchTerm.toLowerCase());
+        return matchesStudent && matchesType && matchesSearch;
+      });
+    }
+
+    function renderStudentButtons() {
+      const students = ["All", ...Object.keys(studentColours)];
+      studentButtons.innerHTML = students.map(student => {
+        const count = student === "All" ? sortedEvents.length : sortedEvents.filter(e => e.student === student).length;
+        const colour = student === "All" ? "#070769" : studentColours[student];
+        return `<button class="student-button ${selectedStudent === student ? "active" : ""}" style="--student-colour: ${colour}" data-student="${student}">
+          <span class="student-name-wrap"><span class="student-dot"></span><span>${student}</span></span>
+          <span class="student-count">${count}</span>
+        </button>`;
+      }).join("");
+
+      document.querySelectorAll(".student-button").forEach(button => {
+        button.addEventListener("click", () => {
+          selectedStudent = button.dataset.student;
+          renderAll();
+        });
+      });
+    }
+
+    function renderCalendar() {
+      const names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const firstDay = new Date(selectedYear, selectedMonth, 1);
+      const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+      const startDay = firstDay.getDay();
+      const filtered = getFilteredEvents();
+      const todayIso = "2026-05-05";
+
+      calendarTitle.textContent = monthName(selectedMonth);
+      calendarGrid.innerHTML = names.map(name => `<div class="day-name">${name}</div>`).join("");
+
+      for (let i = 0; i < startDay; i++) {
+        calendarGrid.insertAdjacentHTML("beforeend", `<div class="day-cell muted"></div>`);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const iso = `${selectedYear}-${String(selectedMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const dayEvents = filtered.filter(event => event.date === iso);
+        const countLabel = dayEvents.length ? `<span class="mobile-event-count">${dayEvents.length}</span>` : "";
+        const pills = dayEvents.map(event => `
+          <button class="event-pill" style="--event-colour: ${event.colour}" data-event-id="${event.id}" aria-label="${event.student}, ${event.time}, ${event.level}">
+            <span class="event-time">${event.time}</span>
+            <span class="event-student">${event.student}</span>
+            <span class="event-title">${event.type} | ${event.title}</span>
+          </button>
+        `).join("");
+
+        calendarGrid.insertAdjacentHTML("beforeend", `
+          <div class="day-cell ${iso === todayIso ? "today" : ""} ${iso === selectedDate ? "selected-day" : ""}" data-date="${iso}" role="button" tabindex="0" aria-label="View schedule for ${formatDate(iso, { year: true })}">
+            <div class="day-number"><span>${day}</span>${countLabel}${iso === todayIso ? "<span class='today-tag'>Today</span>" : ""}</div>
+            ${pills}
+          </div>
+        `);
+      }
+
+      document.querySelectorAll(".day-cell[data-date]").forEach(cell => {
+        const openDay = () => {
+          selectedDate = cell.dataset.date;
+          renderCalendar();
+          if (window.matchMedia("(max-width: 740px)").matches) {
+            daySchedulePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        };
+
+        cell.addEventListener("click", openDay);
+        cell.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openDay();
+          }
+        });
+      });
+
+      document.querySelectorAll(".event-pill").forEach(button => {
+        button.addEventListener("click", event => {
+          event.stopPropagation();
+          const clickedEvent = sortedEvents.find(item => item.id === button.dataset.eventId);
+          if (clickedEvent) selectedDate = clickedEvent.date;
+          renderDaySchedule();
+          showDetails(button.dataset.eventId);
+        });
+      });
+
+      renderDaySchedule();
+    }
+
+    function renderDaySchedule() {
+      const filtered = getFilteredEvents();
+      const selectedEvents = filtered.filter(event => event.date === selectedDate);
+      const selectedDateObject = parseLocalDate(selectedDate);
+      const selectedMonthMatches = selectedDateObject.getMonth() === selectedMonth && selectedDateObject.getFullYear() === selectedYear;
+
+      if (!selectedMonthMatches) {
+        daySchedulePanel.innerHTML = `<div class="details-empty">Choose a day in ${monthName(selectedMonth)} to see the full day schedule.</div>`;
+        return;
+      }
+
+      if (!selectedEvents.length) {
+        daySchedulePanel.innerHTML = `
+          <div class="day-schedule-head">
+            <div>
+              <p class="section-kicker"><i class="bi bi-calendar-day"></i> Selected day</p>
+              <h3>${formatDate(selectedDate, { year: true })}</h3>
+              <p>No visible lessons for this day.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      daySchedulePanel.innerHTML = `
+        <div class="day-schedule-head">
+          <div>
+            <p class="section-kicker"><i class="bi bi-calendar-day"></i> Selected day</p>
+            <h3>${formatDate(selectedDate, { year: true })}</h3>
+            <p>${selectedEvents.length} lesson${selectedEvents.length === 1 ? "" : "s"} scheduled.</p>
+          </div>
+        </div>
+        <div class="day-schedule-list">
+          ${selectedEvents.map(event => `
+            <button class="day-schedule-item" style="--row-colour: ${event.colour}" data-event-id="${event.id}">
+              <div class="day-schedule-time">${event.time}<br><span class="type-chip">${event.type}</span></div>
+              <div class="day-schedule-main">
+                <strong>${event.student} | ${event.level}</strong>
+                <span>${event.topics}</span>
+              </div>
+            </button>
+          `).join("")}
+        </div>
+      `;
+
+      document.querySelectorAll(".day-schedule-item").forEach(row => {
+        row.addEventListener("click", () => showDetails(row.dataset.eventId));
+      });
+    }
+
+    function renderList() {
+      const filtered = getFilteredEvents();
+      document.getElementById("statLessons").textContent = filtered.length;
+      document.getElementById("statStudents").textContent = Object.keys(studentColours).length;
+
+      if (!filtered.length) {
+        lessonList.innerHTML = `<div class="details-empty">No lessons match this filter.</div>`;
+        return;
+      }
+
+      lessonList.innerHTML = filtered.map(event => `
+        <button class="lesson-row" style="--row-colour: ${event.colour}" data-event-id="${event.id}">
+          <div class="lesson-date">${formatDate(event.date, { short: true })}<br>${event.time}</div>
+          <div class="lesson-main">
+            <strong>${event.student} | ${event.level}</strong>
+            <span>${event.topics}</span>
+          </div>
+          <span class="type-chip">${event.type}</span>
+        </button>
+      `).join("");
+
+      document.querySelectorAll(".lesson-row").forEach(row => {
+        row.addEventListener("click", () => showDetails(row.dataset.eventId));
+      });
+    }
+
+    function renderNextLesson() {
+      const now = parseLocalDate("2026-05-05");
+      const next = sortedEvents.find(event => parseLocalDate(event.date) >= now);
+      if (!next) return;
+      nextLessonCard.innerHTML = `
+        <div class="tutor-welcome">
+          <img class="tutor-avatar" src="howard-profile.jpg" alt="Howard profile photo">
+          <div>
+            <strong>Hi Howard</strong>
+            <span>Your tutoring schedule at a glance</span>
+          </div>
+        </div>
+        <p class="section-kicker"><i class="bi bi-stars"></i> Next lesson</p>
+        <h2>${next.student}</h2>
+        <p><strong>${formatDate(next.date, { year: true })}</strong><br>${next.time}<br>${next.level}</p>
+        <button class="link-btn" style="background:${next.colour}; color:${next.student === "Charlie" ? "#141414" : "#ffffff"};" onclick="showDetails('${next.id}')">View details</button>
+      `;
+    }
+
+    function showDetails(eventId) {
+      const event = sortedEvents.find(item => item.id === eventId);
+      if (!event) return;
+      const hasLink = event.link && event.link.trim().length > 0;
+
+      detailsContent.className = "details-card";
+      detailsContent.style.setProperty("--detail-colour", event.colour);
+      detailsContent.innerHTML = `
+        <div class="details-head">
+          <span class="badge">${event.type}</span>
+          <h3>${event.student}</h3>
+          <p>${event.level}</p>
+        </div>
+        <div class="details-body">
+          <div class="info-row">
+            <span>Date and time</span>
+            <strong>${formatDate(event.date, { year: true })}, ${event.time}</strong>
+          </div>
+          <div class="info-row">
+            <span>Topics requested</span>
+            <div>${event.topics}</div>
+          </div>
+          <div class="info-row">
+            <span>Notes</span>
+            <div>${event.notes}</div>
+          </div>
+          <div class="info-row">
+            <span>Meeting ID</span>
+            <div>${event.meetingId}</div>
+          </div>
+          <div class="info-row">
+            <span>Passcode</span>
+            <div>${event.passcode}</div>
+          </div>
+          ${hasLink ? `<a class="link-btn" href="${event.link}" target="_blank" rel="noopener">Open Teams lesson link</a>` : `<button class="link-btn" disabled style="background:#9aa0aa; cursor:not-allowed;">Teams link to be added</button>`}
+          <button class="copy-btn" onclick="copyLesson('${event.id}')">Copy lesson details</button>
+        </div>
+      `;
+      detailsContent.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function copyLesson(eventId) {
+      const event = sortedEvents.find(item => item.id === eventId);
+      if (!event) return;
+      const text = `${event.student}\n${event.level}\n${formatDate(event.date, { year: true })}, ${event.time}\nType: ${event.type}\nTopics: ${event.topics}\nNotes: ${event.notes}\nTeams link: ${event.link || "To be added"}\nMeeting ID: ${event.meetingId}\nPasscode: ${event.passcode}`;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Lesson details copied.");
+      }).catch(() => {
+        alert(text);
+      });
+    }
+
+    function renderAll() {
+      renderStudentButtons();
+      renderCalendar();
+      renderList();
+      renderNextLesson();
+      document.querySelectorAll(".month-tab").forEach(tab => {
+        const isActive = Number(tab.dataset.month) === selectedMonth && Number(tab.dataset.year) === selectedYear;
+        tab.classList.toggle("active", isActive);
+      });
+    }
+
+    document.querySelectorAll(".month-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        selectedMonth = Number(tab.dataset.month);
+        selectedYear = Number(tab.dataset.year);
+        renderAll();
+      });
+    });
+
+    searchInput.addEventListener("input", event => {
+      searchTerm = event.target.value;
+      renderAll();
+    });
+
+    typeFilter.addEventListener("change", event => {
+      selectedType = event.target.value;
+      renderAll();
+    });
+
+    resetBtn.addEventListener("click", () => {
+      selectedStudent = "All";
+      selectedType = "all";
+      searchTerm = "";
+      selectedMonth = 4;
+      selectedYear = 2026;
+      searchInput.value = "";
+      typeFilter.value = "all";
+      detailsContent.className = "details-empty";
+      detailsContent.innerHTML = "Click a lesson card in the calendar or list to view the student, subject, Teams link, meeting ID, passcode, notes and requested topics.";
+      renderAll();
+    });
+
+    navToggle.addEventListener("click", () => {
+      const isOpen = siteNav.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    document.querySelectorAll(".site-nav a").forEach(link => {
+      link.addEventListener("click", () => {
+        siteNav.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
